@@ -1,4 +1,4 @@
-# Use the official .NET image
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -7,11 +7,11 @@ EXPOSE 443
 # Use the SDK image for building the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["YourProjectName.csproj", "./"]
-RUN dotnet restore "./YourProjectName.csproj"
+COPY ["Back_End_WebAPI.csproj", "./"]
+RUN dotnet restore "./Back_End_WebAPI.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet publish "YourProjectName.csproj" -c Release -o /app/out
+RUN dotnet publish "Back_End_WebAPI.csproj" -c Release -o /app/out
 
 # Use the base image to run the application
 FROM base AS final
