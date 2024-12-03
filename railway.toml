@@ -1,0 +1,26 @@
+[build]
+builder = "nixpacks"
+buildCommand = "dotnet publish -c Release -o out"
+
+[deploy]
+startCommand = "dotnet out/Back_End_WebAPI.dll"
+healthcheckPath = "/api/Users/Get"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+
+[env]
+ASPNETCORE_ENVIRONMENT = "Production"
+DOTNET_RUNNING_IN_CONTAINER = "true"
+
+[[services]]
+name = "postgresql"
+plan = "free"
+
+[services.env]
+POSTGRES_USER = "postgres"
+POSTGRES_PASSWORD = "postgres"
+POSTGRES_DB = "examdb"
+
+[[services.ports]]
+port = 80
+internal_port = 8080
